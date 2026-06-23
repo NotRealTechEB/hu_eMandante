@@ -1,16 +1,16 @@
 package cl.dgac.huempresamandante.dto;
 
 import java.time.LocalDateTime;
+import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public record DtoExepciones(
-    @JsonProperty("fecha")
-    LocalDateTime tiempo,
-    @JsonProperty("codigoHttp")
-    Integer codigoEstado,
+    LocalDateTime fecha,
+    int codigoHttp,
     String error,
     String mensaje,
+    Map<String, String> detalles,
     String ruta
 ) {
 
