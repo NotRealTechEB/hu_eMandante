@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 public record DtoIncidentes(
     Long Id,
     String descripcion,
-    DtoTipoIncidente tipo,
+    ModeloTipoIncidente tipo,
     String quien,
     LocalDateTime fecha_reporte,
     boolean resuelto,

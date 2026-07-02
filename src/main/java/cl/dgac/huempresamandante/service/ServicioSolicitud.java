@@ -17,12 +17,12 @@ public class ServicioSolicitud {
         this.solicitudes=conexion;
     }
     public DtoSolicitudes crearSoicitud(DtoSolicitudes ex ){
-        return solicitudes.post().uri("/api/v1.5/solicitudes/crearSolicitud")
+        return solicitudes.post().uri("/api/v1.6x/solicitudes/crearSolicitud")
         .bodyValue(ex).retrieve().bodyToMono(DtoSolicitudes.class).block();
     }
     public List<DtoSolicitudes> listarSolicitudesempresa(String rut){
         return solicitudes.get().uri(uriBuilder-> uriBuilder 
-            .path("/api/v1.5/solicitudes/Empresamandnate")
+            .path("/api/v1.6x/solicitudes/Empresamandnate")
             .queryParam("rut", rut)
             .build()
         ).retrieve()

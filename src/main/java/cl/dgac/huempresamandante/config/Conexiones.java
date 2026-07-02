@@ -10,13 +10,13 @@ public class Conexiones {
     @Bean(name= "empresaMandante")
     public WebClient empresaMnadante(){
         return WebClient.builder()
-        .baseUrl("http://localhost:8088")
+        .baseUrl("https://empresamandante-1.onrender.com")
         .build();}
     
     @Bean(name="solicitudes")
     public WebClient solicitudes(){
         return WebClient.builder()
-        .baseUrl("http://localhost:8080")
+        .baseUrl("https://solicitudes-e4e1.onrender.com")
         .build();
     }
 
@@ -30,7 +30,7 @@ public class Conexiones {
     @Bean(name= "incidentes")
     public WebClient incidentes(){
         return WebClient.builder()
-        .baseUrl("http://localhost:8091")
+        .baseUrl("https://incidentes.onrender.com")
         .build();
     }
 

@@ -8,6 +8,7 @@ import cl.dgac.huempresamandante.dto.DtoIncidentes;
 import cl.dgac.huempresamandante.dto.DtoPlandeVuelo;
 import cl.dgac.huempresamandante.dto.DtoSolicitudes;
 import cl.dgac.huempresamandante.dto.DtoTipoIncidente;
+import cl.dgac.huempresamandante.dto.ModeloTipoIncidente;
 import cl.dgac.huempresamandante.exepciones.ExepcionValidadora;
 import cl.dgac.huempresamandante.service.ServicePlanVuelo;
 import cl.dgac.huempresamandante.service.ServicioEmpresas;
@@ -79,8 +80,8 @@ public class Controlador {
     @PostMapping("/crearincidentes")
     public ResponseEntity<DtoIncidentes> Incidentes(
     @RequestBody DtoIncidentes entity) { 
-        String tipo = entity.tipo().tipo();
-        DtoTipoIncidente dtoTipo = new DtoTipoIncidente(tipo,null);
+        String tipo = entity.tipo().getTipo();
+        ModeloTipoIncidente dtoTipo = new ModeloTipoIncidente(null, tipo);
         if (dtoEmpresa==null){
             DtoIncidentes dto = new DtoIncidentes(
                 null,
@@ -118,10 +119,10 @@ public class Controlador {
             throw new ExepcionValidadora("deves primero validar la empresa en /api/v1/huempresamandate/validar?rut=xxxxx de esa manera o agregar el rut de la siguiente manera ?rut=xxxx");
         }
         else if (rut.isBlank()){
-            return new ResponseEntity<List<DtoPlandeVuelo>> (servicePlanVuelo.planesVuelo(rut),HttpStatus.OK);
+            return new ResponseEntity<List<DtoPlandeVuelo>> (servicePlanVuelo.planesVuelo(dtoEmpresa.rut()),HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<List<DtoPlandeVuelo>> (servicePlanVuelo.planesVuelo(dtoEmpresa.rut()),HttpStatus.OK);
+            return new ResponseEntity<List<DtoPlandeVuelo>> (servicePlanVuelo.planesVuelo(rut),HttpStatus.OK);
         }
     }
     

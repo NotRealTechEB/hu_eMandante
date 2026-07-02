@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public record DtoExepciones(
     LocalDateTime fecha,
-    int codigoHttp,
+    Integer codigoHttp,
     String error,
     String mensaje,
     Map<String, String> detalles,
