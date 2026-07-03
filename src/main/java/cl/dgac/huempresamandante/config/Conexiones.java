@@ -23,7 +23,7 @@ public class Conexiones {
     @Bean(name= "empresaProvedora")
     public WebClient empresaProvedora(){
         return WebClient.builder()
-        .baseUrl("http://localhost:8081")
+        .baseUrl("https://empresaproveedora1.onrender.com")
         .build();
     }
 
@@ -37,7 +37,7 @@ public class Conexiones {
     @Bean(name= "registroVuelo")
     public WebClient registroVuelo(){
         return WebClient.builder()
-        .baseUrl("http://localhost:8084")
+        .baseUrl("https://registrovuelo.onrender.com/")
         .build();
     }
 }
