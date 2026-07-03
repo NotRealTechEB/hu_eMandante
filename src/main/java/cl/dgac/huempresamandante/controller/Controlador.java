@@ -16,7 +16,7 @@ import cl.dgac.huempresamandante.service.ServicioIncidentes;
 import cl.dgac.huempresamandante.service.ServicioSolicitud;
 
 import java.util.List;
-
+import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -80,15 +80,16 @@ public class Controlador {
     @PostMapping("/crearincidentes")
     public ResponseEntity<DtoIncidentes> Incidentes(
     @RequestBody DtoIncidentes entity) { 
-        String tipo = entity.tipo().getTipo();
-        ModeloTipoIncidente dtoTipo = new ModeloTipoIncidente(null, tipo);
+        System.out.println("el dto que ingresa es " + entity.toString());
+        String tipo = entity.tipo().tipo();
+        DtoTipoIncidente dtoTipo = new DtoTipoIncidente(tipo,null);
         if (dtoEmpresa==null){
             DtoIncidentes dto = new DtoIncidentes(
                 null,
                 entity.descripcion(),
                 dtoTipo,
                 "ANONIMO",
-                entity.fecha_reporte(),
+                LocalDateTime.now(),
                 entity.resuelto(),
                 entity.region()
             );
