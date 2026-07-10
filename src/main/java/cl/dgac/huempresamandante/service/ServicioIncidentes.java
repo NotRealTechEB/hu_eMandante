@@ -42,4 +42,9 @@ public class ServicioIncidentes {
     }
 
 
+    public List<String> despertar(){
+        return cliente.get().uri(
+        "/api/v1.0/Incidentes/despertar")
+        .retrieve().bodyToMono(new ParameterizedTypeReference<List<String>>() {}).block();}
+
 }

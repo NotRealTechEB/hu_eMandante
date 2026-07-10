@@ -8,7 +8,7 @@ import cl.dgac.huempresamandante.dto.DtoIncidentes;
 import cl.dgac.huempresamandante.dto.DtoPlandeVuelo;
 import cl.dgac.huempresamandante.dto.DtoSolicitudes;
 import cl.dgac.huempresamandante.dto.DtoTipoIncidente;
-import cl.dgac.huempresamandante.dto.ModeloTipoIncidente;
+
 import cl.dgac.huempresamandante.exepciones.ExepcionValidadora;
 import cl.dgac.huempresamandante.service.ServicePlanVuelo;
 import cl.dgac.huempresamandante.service.ServicioEmpresas;
@@ -43,6 +43,15 @@ public class Controlador {
         this.servicePlanVuelo=planVuelo;
         this.dtoEmpresa= null;
     }
+    @GetMapping("/despertar")
+    public ResponseEntity<List<String>> despertar() {
+        List miki = servicioIncidentes.despertar();
+        miki.add("servicio solicitud : " + servicioSolicitud.despertar());
+        miki.add("servicio empresa Mandate : " + servicio.despertar());
+        return new ResponseEntity<List<String>>( miki ,HttpStatus.OK);
+
+    }
+    
     @GetMapping("/validar")
     public ResponseEntity<DtoEmpresamandante> validar(@RequestParam(name = "rut") String rut) {
         this.dtoEmpresa = servicio.validar(rut).getBody();

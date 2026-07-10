@@ -18,8 +18,18 @@ public class ServicePlanVuelo {
     
     public List<DtoPlandeVuelo> planesVuelo (String rut){
         return planVuelo.get().uri(
-            builder -> builder .path("/api/v1/planvuelo/listarPoRut").queryParam("rut", rut)
+            builder -> builder .path("/api/v1/planvuelo/listarPoRut").
+            queryParam("rut", rut)
             .build()
-        ).retrieve().bodyToMono(new ParameterizedTypeReference<List<DtoPlandeVuelo>>(){}).block();
+        ).retrieve().
+        bodyToMono(new ParameterizedTypeReference<List<DtoPlandeVuelo>>(){}).block();
+    }
+    public void despertar(){
+        planVuelo.get().uri(
+        "/api/v1/planvuelo/1")
+        .retrieve().bodyToMono(void.class).subscribe(
+            success -> {}, 
+            error -> {}
+        );
     }
 }

@@ -48,4 +48,17 @@ public class ServicioEmpresas {
         throw  new ExepcionValidadora("el rut "+rut+" no esta asociado a ninguna empresa");
     }
 
-}
+    public String  despertar(){
+
+        empresaProvedora.get().uri(
+        "/api/empresas-proveedoras/1")
+        .retrieve().bodyToMono(void.class).subscribe(
+            success -> {}, 
+            error -> {}
+        );
+        return empresaMandante.get().uri(
+        "/api/v1.5/Emandante/despertar")
+        .retrieve().bodyToMono(String.class).block();
+    }
+
+} 

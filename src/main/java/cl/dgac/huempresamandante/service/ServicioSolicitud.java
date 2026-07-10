@@ -28,5 +28,8 @@ public class ServicioSolicitud {
         ).retrieve()
         .bodyToMono(new ParameterizedTypeReference<List<DtoSolicitudes>> () {} ).block();
     }
-
+    public String despertar(){
+        return solicitudes.get().uri(
+        "/api/v1.6x/solicitudes/despertar")
+        .retrieve().bodyToMono(String.class).block();}
 }
