@@ -14,7 +14,10 @@ import cl.dgac.huempresamandante.service.ServicePlanVuelo;
 import cl.dgac.huempresamandante.service.ServicioEmpresas;
 import cl.dgac.huempresamandante.service.ServicioIncidentes;
 import cl.dgac.huempresamandante.service.ServicioSolicitud;
+import reactor.core.publisher.Mono;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
@@ -43,14 +46,34 @@ public class Controlador {
         this.servicePlanVuelo=planVuelo;
         this.dtoEmpresa= null;
     }
-    @GetMapping("/despertar")
-    public ResponseEntity<List<String>> despertar() {
-        List miki = servicioIncidentes.despertar();
-        miki.add("servicio solicitud : " + servicioSolicitud.despertar());
-        miki.add("servicio empresa Mandate : " + servicio.despertar());
-        return new ResponseEntity<List<String>>( miki ,HttpStatus.OK);
 
-    }
+    @GetMapping("/despertar")
+    public Mono<ResponseEntity<List<String>>> despertar() { // <-- El Mono va afuera de todo
+        return Mono.zip(
+            servicioIncidentes.despertar(), // Devuelve Mono<List<String>>
+            servicioSolicitud.despertar(),  // Devuelve Mono<String>
+            servicio.despertar()            // Devuelve Mono<String>
+        ).map(tuple -> {
+            List<String> miki = new ArrayList<>();
+            
+            // 1. Extraemos la lista del primer servicio de forma segura
+            List<String> incidentes = (List<String>) tuple.getT1();
+            if (incidentes != null) {
+                miki.addAll(incidentes);
+            }
+            
+            // 2. Extraemos los Strings de los otros servicios usando las posiciones de la tupla
+            String resultadoSolicitud = (String) tuple.getT2();
+            String resultadoEmpresa = (String) tuple.getT3();
+            
+            miki.add("servicio solicitud : " + resultadoSolicitud);
+            miki.add("servicio empresa Mandante : " + resultadoEmpresa);
+            
+            // 3. Devolvemos la lista final envuelta en el ResponseEntity correcto
+            return new ResponseEntity<>(miki, HttpStatus.OK);
+        });
+}
+
     
     @GetMapping("/validar")
     public ResponseEntity<DtoEmpresamandante> validar(@RequestParam(name = "rut") String rut) {

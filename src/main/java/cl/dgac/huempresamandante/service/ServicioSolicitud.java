@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import cl.dgac.huempresamandante.dto.DtoSolicitudes;
+import reactor.core.publisher.Mono;
 
 @Service
 public class ServicioSolicitud {
@@ -28,8 +29,9 @@ public class ServicioSolicitud {
         ).retrieve()
         .bodyToMono(new ParameterizedTypeReference<List<DtoSolicitudes>> () {} ).block();
     }
-    public String despertar(){
+    public Mono<String> despertar(){
         return solicitudes.get().uri(
         "/api/v1.6x/solicitudes/despertar")
-        .retrieve().bodyToMono(String.class).block();}
+        .retrieve().bodyToMono(String.class)
+        .onErrorReturn("");}
 }

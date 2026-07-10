@@ -9,6 +9,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import cl.dgac.huempresamandante.dto.DtoIncidentes;
 import cl.dgac.huempresamandante.dto.DtoTipoIncidente;
+import reactor.core.publisher.Mono;
 
 @Service
 public class ServicioIncidentes {
@@ -42,10 +43,10 @@ public class ServicioIncidentes {
     }
 
 
-    public List<String> despertar(){
+    public Mono<List<String>> despertar(){
         return cliente.get().uri(
         "/api/v1.0/Incidentes/despertar")
         .retrieve().bodyToMono(new ParameterizedTypeReference<List<String>>() {})
-        .doOnError(error -> System.out.println("¡EL ERROR REAL ES!: " + error.getMessage())).block();}
+        .onErrorReturn(List.of());}
 
 }

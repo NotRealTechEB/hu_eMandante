@@ -11,6 +11,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import cl.dgac.huempresamandante.dto.DtoEmpresaProvedora;
 import cl.dgac.huempresamandante.dto.DtoEmpresamandante;
 import cl.dgac.huempresamandante.exepciones.ExepcionValidadora;
+import reactor.core.publisher.Mono;
 
 @Service
 public class ServicioEmpresas {
@@ -48,7 +49,7 @@ public class ServicioEmpresas {
         throw  new ExepcionValidadora("el rut "+rut+" no esta asociado a ninguna empresa");
     }
 
-    public String  despertar(){
+    public Mono<String>  despertar(){
 
         empresaProvedora.get().uri(
         "/api/empresas-proveedoras/1")
@@ -58,7 +59,8 @@ public class ServicioEmpresas {
         );
         return empresaMandante.get().uri(
         "/api/v1.5/Emandante/despertar")
-        .retrieve().bodyToMono(String.class).block();
+        .retrieve().bodyToMono(String.class).
+        onErrorReturn("");
     }
 
 } 
