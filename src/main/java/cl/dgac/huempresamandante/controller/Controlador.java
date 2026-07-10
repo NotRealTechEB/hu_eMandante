@@ -31,7 +31,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/v1/huempresamandate")
-@SessionScope
 public class Controlador {
     private final ServicioEmpresas  servicio;
     private final ServicioSolicitud servicioSolicitud;
