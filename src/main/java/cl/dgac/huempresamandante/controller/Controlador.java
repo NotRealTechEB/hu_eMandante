@@ -15,9 +15,7 @@ import cl.dgac.huempresamandante.service.ServicioEmpresas;
 import cl.dgac.huempresamandante.service.ServicioIncidentes;
 import cl.dgac.huempresamandante.service.ServicioSolicitud;
 import reactor.core.publisher.Mono;
-
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.time.LocalDateTime;
 import org.springframework.http.HttpStatus;
@@ -28,7 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-
+@SessionScope
 @RestController
 @RequestMapping("/api/v1/huempresamandate")
 public class Controlador {
