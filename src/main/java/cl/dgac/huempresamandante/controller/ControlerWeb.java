@@ -12,6 +12,7 @@ import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.ui.Model;
 import cl.dgac.huempresamandante.dto.DtoEmpresamandante;
 import cl.dgac.huempresamandante.dto.DtoIncidentes;
+import cl.dgac.huempresamandante.dto.DtoPlandeVuelo;
 import cl.dgac.huempresamandante.dto.DtoSolicitudes;
 import cl.dgac.huempresamandante.dto.DtoTipoIncidente;
 import cl.dgac.huempresamandante.dto.DtoTipoTrabajo;
@@ -62,9 +63,12 @@ private final ServicioEmpresas  servicio;
             return "redirect:/"; 
         }
         List<DtoSolicitudes> lista = servicioSolicitud.listarSolicitudesempresa(dtoEmpresa.rut());
+        List<DtoPlandeVuelo> listaPlanes = servicePlanVuelo.planesVuelo(dtoEmpresa.rut());
         model.addAttribute("listaSolicitudes", lista);
         model.addAttribute("empresa", dtoEmpresa);
-        
+        model.addAttribute("listaPlanes", listaPlanes);
+        // En tu controlador
+        listaPlanes.forEach(p -> System.out.println("Piloto: " + p.pilotoDTO()));
         return "dashboard"; 
     }
     @GetMapping("/formulario-solicitud")
