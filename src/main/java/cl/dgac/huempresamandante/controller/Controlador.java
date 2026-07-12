@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-@SessionScope
+
 @RestController
 @RequestMapping("/api/v1/huempresamandate")
 public class Controlador {

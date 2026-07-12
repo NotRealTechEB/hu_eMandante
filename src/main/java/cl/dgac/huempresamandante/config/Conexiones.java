@@ -40,4 +40,11 @@ public class Conexiones {
         .baseUrl("https://registrovuelo.onrender.com/")
         .build();
     }
+    @Bean(name= "tipoTrabajo")
+    public WebClient tipoTrabajo (){
+        return WebClient.builder()
+        .baseUrl("https://tipotrabajo.onrender.com/")
+        .build();
+    }
+
 }

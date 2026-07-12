@@ -2,7 +2,7 @@ package cl.dgac.huempresamandante.exepciones;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-
+import org.springframework.ui.Model;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -56,6 +56,12 @@ public class ManejodeExecpcionesGlobales {
         return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR,
             "Error Interno del Servidor", request.getRequestURI(), null);
     }
+    @ExceptionHandler(ExepcionVisual.class)
+    public String handleExcepcionValidadora(ExepcionVisual ex, Model model) {
+        model.addAttribute("error", ex.getMessage());
+        model.addAttribute("empresaValidada", false);
+        return "index"; // <--- ESTO mantiene al usuario en la misma página
+}
 
 }
 

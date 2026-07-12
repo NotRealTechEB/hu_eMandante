@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hu-Empresa Mandante</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #e9ecef; }
+        .main-container { max-width: 500px; margin-top: 50px; }
+        .card { border-radius: 15px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); border: none; }
+    </style>
+</head>
+<body>
+
+<div class="container main-container">
+    <div class="card p-4">
+        <h2 class="text-center mb-4">Panel de Gestión</h2>
+
+        <div th:if="${!empresaValidada}">
+            <p class="text-muted text-center">Por favor, ingrese el RUT para comenzar</p>
+            <form th:action="@{/validar}" method="get">
+                <div class="mb-3">
+                    <input type="text" name="rut" class="form-control" placeholder="Ej: 12345678-9" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Validar Empresa</button>
+            </form>
+        </div>
+
+        <div th:if="${empresaValidada}" class="text-center">
+            <div class="alert alert-success">
+                <strong>Empresa Validada:</strong><br>
+                <span th:text="${empresaValidada ? 'Acceso concedido' : ''}"></span>
+            <div class="d-grid gap-2 mt-3">
+                <a href="/formulario-solicitud" class="btn btn-success">Nueva Solicitud</a>
+                <a href="/dashboard" class="btn btn-info text-white">Ver Dashboard</a>
+                <a href="/formulario-incidente" class="btn btn-warning">Reportar Incidente</a>
+                <a href="/logout" class="btn btn-outline-danger">Cambiar Empresa / Salir</a>
+        </div>
+
+        <div th:if="${error}" class="alert alert-danger mt-3 text-center">
+            <i class="bi bi-exclamation-triangle"></i>
+            <span th:text="${error}">Error desconocido</span>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
